@@ -1,0 +1,58 @@
+---
+title: "preprocessing and data transformation"
+output: html_document
+date: "2023-11-29"
+---
+
+```{r preprocessing}
+# Load required libraries
+library(dplyr)
+library(missForest)  # For imputation, install with install.packages("missForest")
+
+# Confirmation of the presence of missing values
+missing_values <- sum(is.na(properties_dataset))
+
+# Print the count of missing values
+print(paste("Number of Missing Values: ", missing_values))
+
+# Data imputation (if applicable)
+# Assuming you want to impute missing values using missForest
+if (missing_values > 0) {
+  # Identify columns with missing values
+  cols_with_missing <- colnames(properties_dataset)[apply(properties_dataset, 2, anyNA)]
+  
+  # Impute missing values using missForest
+  properties_dataset[cols_with_missing] <- missForest::missForest(
+    x = properties_dataset[cols_with_missing], verbose = TRUE
+  )$ximp
+}
+
+# Data transformation (if applicable)
+# For example, log transformation of a numeric column (replace "Price" with your column name)
+properties_dataset$Price <- log(properties_dataset$Price + 1)
+
+# Display the first few rows of the transformed dataset
+head(properties_dataset)
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r }
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r transformed datasetE}
+# Display the first few rows of the transformed dataset
+head(properties_dataset)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
