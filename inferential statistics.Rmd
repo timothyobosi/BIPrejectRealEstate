@@ -1,0 +1,95 @@
+---
+title: "Anova"
+output: html_document
+date: "2023-11-29"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r ANOVA}
+# properties_dataset is already loaded
+frequency_table <- table(properties_dataset$Property)
+
+# Display the frequency table
+print(frequency_table)
+
+# properties_dataset is already loaded
+mean_price <- mean(properties_dataset$Price)
+median_price <- median(properties_dataset$Price)
+mode_price <- names(sort(table(properties_dataset$Price), decreasing = TRUE)[1])
+
+# Display the results
+print(paste("Mean Price:", mean_price))
+print(paste("Median Price:", median_price))
+print(paste("Mode Price:", mode_price))
+
+# properties_dataset is already loaded
+sd_price <- sd(properties_dataset$Price)
+iqr_price <- IQR(properties_dataset$Price)
+
+# Display the results
+print(paste("Standard Deviation of Price:", sd_price))
+print(paste("Interquartile Range of Price:", iqr_price))
+
+# properties_dataset is already loaded
+correlation_matrix <- cor(properties_dataset[, c("Price", "sqft_Price", "Carpet_Area")])
+
+# Selecting numeric columns
+numeric_columns <- sapply(properties_dataset, is.numeric)
+numeric_data <- properties_dataset[, numeric_columns]
+
+# Calculating the correlation matrix
+correlation_matrix <- cor(numeric_data, use = "complete.obs")
+
+# Displaying the correlation matrix
+print(correlation_matrix)
+
+# Remove missing values from the "Price" column
+non_missing_prices <- na.omit(properties_dataset$Price)
+
+# Calculate IQR for non-missing values
+iqr_price <- IQR(non_missing_prices)
+
+# Display the result
+print(paste("Interquartile Range of Price:", iqr_price))
+
+# Display column names
+column_names <- names(properties_dataset)
+print(column_names)
+
+
+anova_result <- aov(Price ~ `Possession Status` * Commercial, data = properties_dataset)
+
+
+
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r missing values}
+# Assuming 'properties_dataset' is already loaded
+
+# Remove missing values from the "Price" column
+non_missing_prices <- na.omit(properties_dataset$Price)
+
+# Calculate IQR for non-missing values
+iqr_price <- IQR(non_missing_prices)
+
+# Display the result
+print(paste("Interquartile Range of Price:", iqr_price))
+
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
