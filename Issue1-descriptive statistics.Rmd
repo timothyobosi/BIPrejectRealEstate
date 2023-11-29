@@ -1,0 +1,122 @@
+---
+title: "BI project"
+output:
+  html_document: default
+  pdf_document: default
+date: "2023-11-29"
+---
+
+```{r Install Packages, echo=TRUE, message=FALSE, warning=FALSE}
+## formatR - Required to format R code in the markdown ----
+if (!is.element("formatR", installed.packages()[, 1])) {
+  install.packages("formatR", dependencies = TRUE,
+                   repos="https://cloud.r-project.org")
+}
+require("formatR")
+
+
+## readr - Load datasets from CSV files ----
+if (!is.element("readr", installed.packages()[, 1])) {
+  install.packages("readr", dependencies = TRUE,
+                   repos="https://cloud.r-project.org")
+}
+require("readr")
+
+
+if (!is.element("NHANES", installed.packages()[, 1])) {
+  install.packages("NHANES", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("NHANES")
+
+## dplyr ----
+if (!is.element("dplyr", installed.packages()[, 1])) {
+  install.packages("dplyr", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("dplyr")
+
+## naniar ----
+# Documentation:
+#   https://cran.r-project.org/package=naniar or
+#   https://www.rdocumentation.org/packages/naniar/versions/1.0.0
+if (!is.element("naniar", installed.packages()[, 1])) {
+  install.packages("naniar", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("naniar")
+
+## ggplot2 ----
+# We require the "ggplot2" package to create more appealing visualizations
+if (!is.element("ggplot2", installed.packages()[, 1])) {
+  install.packages("ggplot2", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("ggplot2")
+
+## MICE ----
+# We use the MICE package to perform data imputation
+if (!is.element("mice", installed.packages()[, 1])) {
+  install.packages("mice", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("mice")
+
+## Amelia ----
+if (!is.element("Amelia", installed.packages()[, 1])) {
+  install.packages("Amelia", dependencies = TRUE,
+                   repos = "https://cloud.r-project.org")
+}
+require("Amelia")
+```
+
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+# 'properties_dataset' is already loaded
+
+# Measure of Frequency
+frequency_summary <- summary(properties_dataset)
+
+# Measure of Central Tendency
+mean_values <- sapply(properties_dataset, mean)
+median_values <- sapply(properties_dataset, median)
+
+# Measure of Distribution
+variance_values <- sapply(properties_dataset, var)
+sd_values <- sapply(properties_dataset, sd)
+
+# Measure of Relationships (correlation matrix)
+correlation_matrix <- cor(properties_dataset)
+
+# Displaying the results
+frequency_summary
+mean_values
+median_values
+variance_values
+sd_values
+correlation_matrix
+
+```
+
+
+```{r cars}
+head(properties_dataset)
+
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+summary(properties_dataset)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
