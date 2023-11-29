@@ -18,6 +18,14 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r data splitting}
+library(readr)
+properties_dataset <- read_csv("data/properties.csv")
+# Load data from a CSV file
+library(readr)
+properties <- read_csv("data/properties.csv")
+View(properties)
+
+View(properties)
 # Load required libraries
 library(caret)
 
@@ -57,7 +65,15 @@ if (any(is.na(properties_dataset$Price))) {
 
 You can also embed plots, for example:
 
-```{r pressure, echo=FALSE}
+```{r pressure}
+library(readr)
+properties_dataset <- read_csv("data/properties.csv")
+# Load data from a CSV file
+library(readr)
+properties <- read_csv("data/properties.csv")
+View(properties)
+
+View(properties)
 # Data Splitting
 # Load required libraries
 library(caret)
@@ -92,6 +108,14 @@ if (any(is.na(properties_dataset$Price))) {
 You can also embed plots, for example:
 
 ```{r Training Model}
+library(readr)
+properties_dataset <- read_csv("data/properties.csv")
+# Load data from a CSV file
+library(readr)
+properties <- read_csv("data/properties.csv")
+View(properties)
+
+View(properties)
 # Load required libraries
 library(caret)
 library(e1071)  # Example: SVM, replace with the appropriate modeling package
