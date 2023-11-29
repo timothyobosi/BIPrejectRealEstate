@@ -1,0 +1,92 @@
+---
+title: "Consolidation"
+output: html_document
+date: "2023-11-29"
+---
+
+```{r plumber API}
+# Install and load required libraries
+install.packages("plumber")
+library(plumber)
+
+# Assuming 'base_model' is the model you trained
+model <- base_model
+
+# Define the Plumber API
+api <- plumber::plumber()
+
+# Define an endpoint for prediction
+api$register(
+  "/predict",
+  POST = function(req, res) {
+    # Get input data from the request
+    input_data <- req$postBody
+    input_data <- jsonlite::fromJSON(input_data)
+
+    # Make a prediction using the model
+    prediction <- predict(model, newdata = input_data)
+
+    # Return the prediction as JSON
+    res$setHeader("Content-Type", "application/json")
+    res$setBody(jsonlite::toJSON(list(prediction = prediction)))
+  }
+)
+
+# Run the Plumber API
+api$run(port = 8000)
+
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r consume plumer API}
+# Install and load required libraries
+install.packages(c("shiny", "httr"))
+library(shiny)
+library(httr)
+
+# Define the Shiny app
+ui <- fluidPage(
+  textInput("input_data", "Input Data (JSON):", ""),
+  actionButton("predict_button", "Predict"),
+  textOutput("prediction_output")
+)
+
+server <- function(input, output, session) {
+  observeEvent(input$predict_button, {
+    # Prepare input data as JSON
+    input_data <- input$input_data
+    input_json <- jsonlite::toJSON(list(input_data))
+
+    # Make a request to the Plumber API
+    response <- httr::POST("http://127.0.0.1:8000/predict", body = input_json, content_type("application/json"))
+
+    # Parse the response
+    result <- httr::content(response, type = "application/json")
+
+    # Display the prediction
+    output$prediction_output <- renderText({
+      paste("Prediction: ", result$prediction)
+    })
+  })
+}
+
+# Run the Shiny app
+shinyApp(ui, server)
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
