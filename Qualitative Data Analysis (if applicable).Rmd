@@ -1,0 +1,167 @@
+---
+title: "Qualitative Data Analysis"
+output: html_document
+date: "2023-11-29"
+---
+
+
+```{r Tokenize}
+# Install required packages if not installed
+if (!requireNamespace("text", quietly = TRUE)) {
+  install.packages("text")
+}
+
+if (!requireNamespace("tidytext", quietly = TRUE)) {
+  install.packages("tidytext")
+}
+
+# Load required packages
+library(text)
+library(tidytext)
+
+# Sample text
+text_data <- "I can't believe the prices are these high. It's really unfortunate!"
+
+# Function to perform text preprocessing
+preprocess_text <- function(text) {
+  # Expand contractions
+  text <- textContract(text)
+  
+  # Remove special characters and convert to lowercase
+  text <- tolower(gsub("[^a-z\\s]", "", text))
+  
+  # Tokenization
+  tokens <- unlist(strsplit(text, "\\s+"))
+  
+  # Lemmatization
+  tokens <- lemmatize_words(tokens)
+  
+  # Return preprocessed text
+  return(tokens)
+}
+
+# Install required packages if not installed
+if (!requireNamespace("text", quietly = TRUE)) {
+  install.packages("text")
+}
+
+if (!requireNamespace("tidytext", quietly = TRUE)) {
+  install.packages("tidytext")
+}
+
+# Load required packages
+library(text)
+library(tidytext)
+
+# Sample text
+text_data <- "I can't believe I won't be able to make it. It's really unfortunate!"
+
+# Function to perform text preprocessing
+preprocess_text <- function(text) {
+  # Expand contractions
+  text <- expand_contractions(text)
+  
+  # Remove special characters and convert to lowercase
+  text <- tolower(gsub("[^a-z\\s]", "", text))
+  
+  # Tokenization
+  tokens <- unlist(strsplit(text, "\\s+"))
+  
+  # Lemmatization
+  tokens <- lemmatize_words(tokens)
+  
+  # Return preprocessed text
+  return(tokens)
+}
+
+# Install required packages if not installed
+if (!requireNamespace("text", quietly = TRUE)) {
+  install.packages("text")
+}
+
+if (!requireNamespace("tidytext", quietly = TRUE)) {
+  install.packages("tidytext")
+}
+
+if (!requireNamespace("tokenizers", quietly = TRUE)) {
+  install.packages("tokenizers")
+}
+
+# Load required packages
+library(text)
+library(tidytext)
+library(tokenizers)
+
+# Sample text
+text_data <- "I can't believe the prices are that high. It's really unfortunate!"
+
+# Function to perform text preprocessing
+preprocess_text <- function(text) {
+  # Expand contractions
+  text <- tolower(text)
+  text <- tokens_replace(text, contractions::contractions)
+  
+  # Remove special characters
+  text <- removePunctuation(text)
+  
+  # Tokenization
+  tokens <- unlist(tokenize_words(text))
+  
+  # Lemmatization
+  tokens <- lemmatize_words(tokens)
+  
+  # Return preprocessed text
+  return(tokens)
+}
+
+# Apply text preprocessing to the sample text
+preprocessed_text <- preprocess_text(text_data)
+
+# Print preprocessed text
+print(preprocessed_text)
+
+
+# Apply text preprocessing to the sample text
+preprocessed_text <- preprocess_text(text_data)
+
+# Print preprocessed text
+print(preprocessed_text)
+
+
+# Apply text preprocessing to the sample text
+preprocessed_text <- preprocess_text(text_data)
+
+# Print preprocessed text
+print(preprocessed_text)
+
+# Sentiment analysis
+sentiment <- get_sentiments("bing")
+sentiment_analysis <- inner_join(data.frame(word = names(table(preprocessed_text))), sentiment)
+
+# Calculate sentiment score
+sentiment_score <- sum(sentiment_analysis$sentiment == "positive") - sum(sentiment_analysis$sentiment == "negative")
+
+# Print sentiment score
+print(paste("Sentiment Score:", sentiment_score))
+
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
